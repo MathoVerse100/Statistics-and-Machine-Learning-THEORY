@@ -1,1 +1,1 @@
-# Mathematics-Statistics-and-Computer-Science-Theory
+# Mathematics-and-Computer-Science-Theory
