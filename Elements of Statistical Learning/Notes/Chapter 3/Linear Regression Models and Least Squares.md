@@ -81,9 +81,26 @@ We have:
 
 But since $H = X(X^T X)^{-1} X^T$, the trace is given by $Tr(H) = Tr(X(X^T X)^{-1} X^T) = Tr(X^T X(X^T X)^{-1}) = Tr(I_{(p+1) \times (p+1)}) = p + 1$. So $E(\epsilon^T H \epsilon) = (p + 1) \sigma^2$.
 
-Thus $E(SSE) = E(\epsilon^T \epsilon) - E(\epsilon^T H \epsilon) = (N - p - 1) \sigma^2$. Dividing SSE by (N - p - 1) and putting:
+Thus $E(SSE) = E(\epsilon^T \epsilon) - E(\epsilon^T H \epsilon) = (N - p - 1) \sigma^2$. Dividing $SSE$ by $(N - p - 1)$ and putting:
 
 ### $$\hat{\sigma}^2 = \frac{SSE}{N - p - 1} = \frac{1}{N - p -1} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2$$
 
 concludes the proof.
 $$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \square$$
+
+Often we assume the errors are normally distributed. The reason is because the method of least squares arises naturally under the assumption of maximum likelihood. This is seen in the following theorem.
+
+## Theorem 4
+### Under the model assumption and assuming $\epsilon \ \ \widetilde{~} \ \ \mathcal{N} (0, \sigma^2 I)$, then maximimizing likelihood yields the method of least squares.
+
+**Proof**: Since $\epsilon \ \ \widetilde{~} \ \ \mathcal{N} (0, \sigma^2 I)$, our dataset has a distribution function given by:
+
+### $$\mathcal{N} (y|\beta) = \frac{1}{\sigma (2 \pi)^{\frac{N}{2}}} \exp\\{-\frac{1}{2 \sigma^2} (y - X\beta)^T (y - X\beta)\\}$$
+
+If we substitute the observed outputs $y$, then the likelihood function is given by $L(\beta) = \ln(\mathcal{N} (y|\beta))$. However, if we look at the likelihood function:
+
+### $$L(\beta) = \ln(\frac{1}{\sigma (2 \pi)^{\frac{N}{2}}}) - \frac{1}{2 \sigma^2} (y - X\beta)^T (y - X\beta)$$
+
+we find that maximizing it requires us to minimize $(y - X\beta)^T (y - X\beta)$ which is the least squares condition.
+$$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \square$$
+
