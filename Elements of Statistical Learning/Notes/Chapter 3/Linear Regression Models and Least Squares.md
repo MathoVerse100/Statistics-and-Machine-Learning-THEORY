@@ -61,3 +61,29 @@ Let $\hat{\epsilon}_i$ denote the error between the observed value and the predi
 ### The mean sum - of - squared residuals given by:
 ### $$\hat{\sigma}^2 = \frac{1}{N - p -1} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2$$
 ### is an unbiased estimator of the error variance $\sigma^2$.
+
+**Proof**: We will find the expectation of the sum of squared residuals, denoted by SSE, and show that dividing by $N - p - 1$ gives us $\sigma^2$. 
+
+First, write $\hat{\epsilon} = y - \hat{y} = y - Hy = (I - H)y$. So $SSE = \hat{\epsilon}^T \hat{\epsilon} = y^T (I - H)^T (I - H) y = y^T (I - H)^2 y = y^T (I - H)y = y^T y - y^T Hy$ (this follows because the matrix $I - H$ is symmetric and idempotent). Since $y = X\beta + \epsilon$, we substitute and simplify:
+
+### $$y^T y - y^T Hy = (X\beta + \epsilon)^T (X\beta + \epsilon) - (X\beta + \epsilon)^T H (X\beta + \epsilon)$$
+### $$= (X\beta + \epsilon)^T (X\beta + \epsilon) - (X\beta + \epsilon)^T (X\beta + H \epsilon)$$
+### $$= (X\beta + \epsilon)^T \epsilon - (X\beta + \epsilon)^T H \epsilon$$
+### $$= (\beta^T X^T - \beta^T X^T H) \epsilon + \epsilon^T \epsilon - \epsilon^T H \epsilon$$
+### $$= (\beta^T X^T - \beta^T X^T (X(X^T X)^{-1} X^T)) \epsilon + \epsilon^T \epsilon - \epsilon^T H \epsilon$$
+### $$= (\beta^T X^T - \beta^T X^T) \epsilon + \epsilon^T \epsilon - \epsilon^T H \epsilon$$
+### $$= \epsilon^T \epsilon - \epsilon^T H \epsilon$$
+
+We have:
+
+### $$E(\epsilon^T \epsilon) = \sum_{i=1}^{N} E(\epsilon_i^2) = \sum_{i=1}^{N} (\sigma^2 + E(\epsilon_i)^2) = N\sigma^2$$
+### $$E(\epsilon^T H \epsilon) = E(\sum_{i=1}^{N} \sum_{j=1}^{N} (\epsilon^T)\_{1i} (H)\_{ij} (\epsilon)\_{j1}) = \sum_{i=1}^{N} \sum_{j=1}^{N} (H)\_{ij} E(\epsilon\_{j1} \epsilon\_{i1}) = \sum_{i=1}^{N} (H)_{ii} E(\epsilon_i^2) = \sigma^2 Tr(H)$$
+
+But since $H = X(X^T X)^{-1} X^T$, the trace is given by $Tr(H) = Tr(X(X^T X)^{-1} X^T) = Tr(X^T X(X^T X)^{-1}) = Tr(I_{(p+1) \times (p+1)}) = p + 1$. So $E(\epsilon^T H \epsilon) = (p + 1) \sigma^2$.
+
+Thus $E(SSE) = E(\epsilon^T \epsilon) - E(\epsilon^T H \epsilon) = (N - p - 1) \sigma^2$. Dividing SSE by (N - p - 1) and putting:
+
+### $$\hat{\sigma}^2 = \frac{SSE}{N - p - 1} = \frac{1}{N - p -1} \sum_{i=1}^{N} (y_i - \hat{y}_i)^2$$
+
+concludes the proof.
+$$\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \square$$
